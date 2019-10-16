@@ -21,6 +21,7 @@ namespace TrainingNg.Controllers
         public async Task<int> Post([FromBody] Training t)
         {
             await _context.Training.AddAsync(t);
+            await _context.SaveChangesAsync();
             return t.Duration;
         }
 

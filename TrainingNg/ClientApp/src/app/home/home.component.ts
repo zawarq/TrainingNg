@@ -1,7 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { NgForm, FormBuilder } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-home',
@@ -13,11 +14,17 @@ export class HomeComponent {
   private baseUrl: string;
   private trainingFormGroup: FormGroup;
   private formBuilder: FormBuilder;
+  private spinner: Ng4LoadingSpinnerService;
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, formBuilder: FormBuilder) {
+  constructor(
+    http: HttpClient,
+    @Inject('BASE_URL') baseUrl: string,
+    formBuilder: FormBuilder,
+    spinnerService: Ng4LoadingSpinnerService) {
     this.http = http;
     this.baseUrl = baseUrl;
     this.formBuilder = formBuilder;
+    this.spinner = spinnerService;
 
     this.trainingFormGroup = new FormGroup({
       name: new FormControl(),
@@ -28,13 +35,16 @@ export class HomeComponent {
   }
 
   addTraining() {
-    
+
+    this.spinner.show();
+
     this.training = new Training(this.trainingFormGroup.value);
     
     return this.http.post<number>(this.baseUrl + 'api/Training/Post', this.training).subscribe(result => {
-      console.log(result);
 
       this.trainingFormGroup.controls['duration'].setValue(result + ' days');
+      this.spinner.hide();
+
     }, error => console.error(error));
   }
 
