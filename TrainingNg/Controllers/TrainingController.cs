@@ -23,5 +23,11 @@ namespace TrainingNg.Controllers
             await _context.Training.AddAsync(t);
             return t.Duration;
         }
+
+        [HttpGet("[action]")]
+        public Training Get()
+        {
+            return new Training();
+        }
     }
 }

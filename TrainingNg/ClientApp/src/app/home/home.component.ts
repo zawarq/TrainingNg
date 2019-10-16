@@ -56,7 +56,6 @@ export class Training {
   duration: number;
 
   public constructor(form: any) {
-    console.log(form);
     this.name = form.name;
     this.start = form.start;
     this.end = form.end;
