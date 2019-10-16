@@ -10,7 +10,7 @@ namespace TrainingNg.Controllers
     public class TrainingController : Controller
     {        
         [HttpPost("[action]")]
-        public int Post(Training t)
+        public int Post([FromBody] Training t)
         {
             return t.Duration;
         }
@@ -31,7 +31,7 @@ namespace TrainingNg.Controllers
             {
                 get
                 {
-                    return Convert.ToInt32((End - Start).TotalDays);
+                    return Convert.ToInt32((End - Start).TotalDays + 1);
                 }
             }
         }

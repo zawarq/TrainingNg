@@ -27,13 +27,14 @@ export class HomeComponent {
     });
   }
 
-  addTraining(f: NgForm) {
+  addTraining() {
     
-    this.training = new Training(f.value);
+    this.training = new Training(this.trainingFormGroup.value);
     
     return this.http.post<number>(this.baseUrl + 'api/Training/Post', this.training).subscribe(result => {
       console.log(result);
-      this.training.duration = result;
+
+      this.trainingFormGroup.controls['duration'].setValue(result + ' days');
     }, error => console.error(error));
   }
 
@@ -42,7 +43,8 @@ export class HomeComponent {
       //validation sample: 'email': ['', Validators.compose([Validators.required])]
       'name': ["Sample Training"],
       'start': ["2019-10-01"],
-      'end': ["2019-10-15"]
+      'end': ["2019-10-15"],
+      'duration': ''
     });
   }
 }
@@ -53,8 +55,10 @@ export class Training {
   end: string;
   duration: number;
 
-  public constructor(init?: Partial<Training>) {
-    console.log(init);
-    Object.assign(this, init);
+  public constructor(form: any) {
+    console.log(form);
+    this.name = form.name;
+    this.start = form.start;
+    this.end = form.end;
   }
 }
