@@ -12,7 +12,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "6.1.10",
+    "@angular/animations": "^6.1.10",
     "@angular/common": "6.1.10",
     "@angular/compiler": "6.1.10",
     "@angular/core": "6.1.10",
@@ -28,6 +28,7 @@
     "core-js": "^2.5.4",
     "jquery": "3.3.1",
     "ng4-loading-spinner": "^1.2.3",
+    "ng6-toastr-notifications": "^1.0.4",
     "popper.js": "^1.14.3",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"
