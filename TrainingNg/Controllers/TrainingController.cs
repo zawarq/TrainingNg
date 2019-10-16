@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TrainingNg.Model;
@@ -18,11 +19,11 @@ namespace TrainingNg.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task<int> Post([FromBody] Training t)
+        public async Task<IActionResult> Post([FromBody] Training t)
         {
             await _context.Training.AddAsync(t);
             await _context.SaveChangesAsync();
-            return t.Duration;
+            return StatusCode(Convert.ToInt32(HttpStatusCode.NoContent));
         }
 
         [HttpGet("[action]")]

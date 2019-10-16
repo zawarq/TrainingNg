@@ -40,9 +40,14 @@ export class HomeComponent {
 
     this.training = new Training(this.trainingFormGroup.value);
     
-    return this.http.post<number>(this.baseUrl + 'api/Training/Post', this.training).subscribe(result => {
+    return this.http.post(this.baseUrl + 'api/Training/Post', this.training).subscribe(result => {
 
-      this.trainingFormGroup.controls['duration'].setValue(result + ' days');
+      const startDate = new Date(this.training.start);
+      const endDate = new Date(this.training.end);
+      const diffTime = Math.abs(startDate.getTime() - endDate.getTime());
+      const duration = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+      this.trainingFormGroup.controls['duration'].setValue(duration + ' days');
       this.spinner.hide();
 
     }, error => console.error(error));
