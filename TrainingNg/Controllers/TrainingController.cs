@@ -15,6 +15,12 @@ namespace TrainingNg.Controllers
             return t.Duration;
         }
 
+        [HttpGet("[action]")]
+        public Training Get()
+        {
+            return new Training();
+        }
+
         public class Training
         {
             public string Name { get; set; }
