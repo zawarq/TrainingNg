@@ -1,33 +1,47 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using TrainingNg.Model;
 
 namespace TrainingNg.Controllers
 {
     [Route("api/[controller]")]
     public class TrainingController : Controller
-    {        
-        [HttpPost("[action]")]
-        public int Post(Training t)
+    {
+        private readonly trainingngContext _context;
+
+        public TrainingController(trainingngContext context)
         {
-            return t.Duration;
+            _context = context;
         }
 
-        public class Training
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Post([FromBody] Training t)
         {
-            public string Name { get; set; }
-            public DateTime Start { get; set; }
-            public DateTime End { get; set; }
-
-            public int Duration
+            if (t.End < t.Start)
             {
-                get
-                {
-                    return Convert.ToInt32((End - Start).TotalDays);
-                }
+                return StatusCode(Convert.ToInt32(HttpStatusCode.BadRequest));
             }
+            try
+            {
+                await _context.Training.AddAsync(t);
+                await _context.SaveChangesAsync();
+                return StatusCode(Convert.ToInt32(HttpStatusCode.NoContent));
+            }
+            catch
+            {
+                return StatusCode(Convert.ToInt32(HttpStatusCode.InternalServerError));
+            }
+            
+        }
+
+        [HttpGet("[action]")]
+        public Training Get()
+        {
+            return new Training();
         }
     }
 }
