@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, ValidatorFn, AbstractControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { ToastrManager } from 'ng6-toastr-notifications';
 
@@ -38,7 +38,13 @@ export class HomeComponent {
     });
   }
 
+  get f() { return this.trainingFormGroup.controls; }
+
   addTraining() {
+
+    if (this.trainingFormGroup.invalid) {
+      return;
+    }
 
     this.spinner.show();
 
@@ -67,21 +73,30 @@ export class HomeComponent {
   }
 
   testFill() {
-    this.trainingFormGroup = this.formBuilder.group({
-      //validation sample: 'email': ['', Validators.compose([Validators.required])]
-      'name': ["Sample Training"],
-      'start': ["2019-10-01"],
-      'end': ["2019-10-15"]
-    });
+    this.fillForm("Sample Training", "2019-10-01", "2019-10-15");
+  }
+  
+  emptyFill() {
+    this.fillForm('', '', '');
   }
 
-  emptyFill() {
+  fillForm(name: string, start: string, end: string) {
     this.trainingFormGroup = this.formBuilder.group({
-      'name': [""],
-      'start': [""],
-      'end': [""]
+      'name': [name, [Validators.required, Validators.minLength(4), Validators.maxLength(200)]],
+      'start': [start, [Validators.required, dateOrderValidator(start, end)]],
+      'end': [end, [Validators.required, dateOrderValidator(start, end)]]
     });
   }
+}
+
+function dateOrderValidator(start: string, end: string): ValidatorFn {
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+  const diffTime = endDate.getTime() - startDate.getTime();
+
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    return diffTime < 0 ? { 'dateOrder': { value: 'Start Date must not be greater than End Date' } } : null;
+  };
 }
 
 export class Training {
