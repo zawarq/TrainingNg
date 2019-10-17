@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { dateOrderValidator } from '../shared/date-order.directive';
+import * as errorAssets from '../../assets/errors.json';
 
 @Component({
   selector: 'app-home',
@@ -49,6 +50,7 @@ export class HomeComponent {
   get start() { return this.trainingFormGroup.get('start'); }
   get end() { return this.trainingFormGroup.get('end'); }
   get isFormSubmitted() { return this.formSubmitted; }
+  get dateOrderError() { return errorAssets.dateOrder; }
 
   addTraining() {
     this.formSubmitted = true;

@@ -35,7 +35,7 @@
             </div>
           </div>
           <div *ngIf="trainingForm.errors?.dateOrder && (trainingForm.touched || trainingForm.dirty)" class="cross-validation-error-message alert alert-danger">
-            Start date cannot be greater than end date.
+            {{dateOrderError}}
           </div>
 
           <div class="form-group">
@@ -47,9 +47,6 @@
 
             <div *ngIf="end.errors.required">
               End date is required.
-            </div>
-            <div *ngIf="end.errors.dateOrder">
-              Start date cannot be greater than end date.
             </div>
           </div>
 

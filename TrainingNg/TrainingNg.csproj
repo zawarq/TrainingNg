@@ -27,10 +27,12 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\shared\date-order.directive.ts" />
+    <None Remove="ClientApp\typings.d.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\shared\date-order.directive.ts" />
+    <TypeScriptCompile Include="ClientApp\typings.d.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
