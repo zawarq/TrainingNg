@@ -259,3 +259,5 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+TrainingNg/ClientApp/e2e/results/e2e-results-junit.xml
+package-lock.json
