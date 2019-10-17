@@ -21,9 +21,21 @@ namespace TrainingNg.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> Post([FromBody] Training t)
         {
-            await _context.Training.AddAsync(t);
-            await _context.SaveChangesAsync();
-            return StatusCode(Convert.ToInt32(HttpStatusCode.NoContent));
+            if (t.End < t.Start)
+            {
+                return StatusCode(Convert.ToInt32(HttpStatusCode.BadRequest));
+            }
+            try
+            {
+                await _context.Training.AddAsync(t);
+                await _context.SaveChangesAsync();
+                return StatusCode(Convert.ToInt32(HttpStatusCode.NoContent));
+            }
+            catch
+            {
+                return StatusCode(Convert.ToInt32(HttpStatusCode.InternalServerError));
+            }
+            
         }
 
         [HttpGet("[action]")]

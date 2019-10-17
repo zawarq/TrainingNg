@@ -1,7 +1,7 @@
 <div class="container">
   <h1>Add a Training</h1>
 
-  <form [formGroup]="trainingFormGroup" (ngSubmit)="addTraining(f)">
+  <form [formGroup]="trainingFormGroup" (ngSubmit)="addTraining(controls)">
     <div class="form-row">
       <div class="col">
         <div>
@@ -9,7 +9,7 @@
             <label for="name">Training Name</label>
             <input type="text" formControlName="name" id="name" class="form-control" />
           </div>
-          <div *ngIf="name.invalid && (name.dirty || name.touched)"
+          <div *ngIf="isFormSubmitted && name.invalid && (name.dirty || name.touched)"
                class="alert alert-danger">
 
             <div *ngIf="name.errors.required">
@@ -27,22 +27,22 @@
             <label for="start">Start Date</label>
             <input type="date" formControlName="start" class="form-control" required>
           </div>
-          <div *ngIf="start.invalid && (start.dirty || start.touched)"
+          <div *ngIf="isFormSubmitted && start.invalid && (start.dirty || start.touched)"
                class="alert alert-danger">
 
             <div *ngIf="start.errors.required">
               Start date is required.
             </div>
-            <div *ngIf="start.errors.dateOrder">
-              Start date cannot be greater than end date.
-            </div>
+          </div>
+          <div *ngIf="trainingForm.errors?.dateOrder && (trainingForm.touched || trainingForm.dirty)" class="cross-validation-error-message alert alert-danger">
+            Start date cannot be greater than end date.
           </div>
 
           <div class="form-group">
             <label for="end">End Date</label>
             <input type="date" formControlName="end" class="form-control" required>
           </div>
-          <div *ngIf="end.invalid && (end.dirty || end.touched)"
+          <div *ngIf="isFormSubmitted && end.invalid && (end.dirty || end.touched)"
                class="alert alert-danger">
 
             <div *ngIf="end.errors.required">
