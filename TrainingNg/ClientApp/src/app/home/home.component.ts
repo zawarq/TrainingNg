@@ -40,6 +40,10 @@ export class HomeComponent {
 
   get f() { return this.trainingFormGroup.controls; }
 
+  get name() { return this.trainingFormGroup.get('name'); }
+  get start() { return this.trainingFormGroup.get('start'); }
+  get end() { return this.trainingFormGroup.get('end'); }
+
   addTraining() {
 
     if (this.trainingFormGroup.invalid) {
