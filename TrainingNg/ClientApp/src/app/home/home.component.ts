@@ -66,7 +66,7 @@ export class HomeComponent {
   getDuration(start: string, end: string) {
     const startDate = new Date(start);
     const endDate = new Date(end);
-    const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
+    const diffTime = endDate.getTime() - startDate.getTime();
     const duration = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
 
     return duration;
@@ -77,15 +77,21 @@ export class HomeComponent {
   }
   
   emptyFill() {
-    this.fillForm('', '', '');
+    this.updateForm('', '', '');
   }
 
   fillForm(name: string, start: string, end: string) {
     this.trainingFormGroup = this.formBuilder.group({
-      'name': [name, [Validators.required, Validators.minLength(4), Validators.maxLength(200)]],
-      'start': [start, [Validators.required, dateOrderValidator(start, end)]],
-      'end': [end, [Validators.required, dateOrderValidator(start, end)]]
+      'name':  new FormControl(name, [Validators.required, Validators.minLength(4), Validators.maxLength(200)]),
+      'start': new FormControl(start, [Validators.required, dateOrderValidator(start, end)]),
+      'end':   new FormControl(end, [Validators.required, dateOrderValidator(start, end)])
     });
+  }
+
+  updateForm(name: string, start: string, end: string) {
+    this.trainingFormGroup.controls['name'].setValue('');
+    this.trainingFormGroup.controls['start'].setValue('');
+    this.trainingFormGroup.controls['end'].setValue('');
   }
 }
 
@@ -93,13 +99,15 @@ function dateOrderValidator(start: string, end: string): ValidatorFn {
   const startDate = new Date(start);
   const endDate = new Date(end);
   const diffTime = endDate.getTime() - startDate.getTime();
-
+  console.log(startDate);
+  console.log(endDate);
+  console.log(diffTime);
   return (control: AbstractControl): { [key: string]: any } | null => {
     return diffTime < 0 ? { 'dateOrder': { value: 'Start Date must not be greater than End Date' } } : null;
   };
 }
 
-export class Training {
+class Training {
   name: string;
   start: string;
   end: string;
