@@ -261,3 +261,4 @@ __pycache__/
 *.pyc
 TrainingNg/ClientApp/package-lock.json
 package-lock.json
+TrainingNg/ClientApp/e2e/results/e2e-results-junit.xml

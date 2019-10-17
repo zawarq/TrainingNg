@@ -1,7 +1,7 @@
 <div class="container">
   <h1>Add a Training</h1>
 
-  <form [formGroup]="trainingFormGroup" (ngSubmit)="addTraining(controls)">
+  <form [formGroup]="trainingFormGroup" id="trainingFormGroup" (ngSubmit)="addTraining(controls)">
     <div class="form-row">
       <div class="col">
         <div>
@@ -25,7 +25,7 @@
 
           <div class="form-group">
             <label for="start">Start Date</label>
-            <input type="date" formControlName="start" class="form-control" required>
+            <input type="date" formControlName="start" id="start" class="form-control" required>
           </div>
           <div *ngIf="isFormSubmitted && start.invalid && (start.dirty || start.touched)"
                class="alert alert-danger">
@@ -40,7 +40,7 @@
 
           <div class="form-group">
             <label for="end">End Date</label>
-            <input type="date" formControlName="end" class="form-control" required>
+            <input type="date" formControlName="end" id="end" class="form-control" required>
           </div>
           <div *ngIf="isFormSubmitted && end.invalid && (end.dirty || end.touched)"
                class="alert alert-danger">
@@ -58,7 +58,7 @@
               <button type="button" class="btn btn-success" (click)="testFill()">Test Fill</button>
             </div>
             <div class="col">
-              <button type="submit" class="btn btn-success">Confirm</button>
+              <button id="confirm" type="submit" class="btn btn-success">Confirm</button>
             </div>
             <div class="col">
             </div>

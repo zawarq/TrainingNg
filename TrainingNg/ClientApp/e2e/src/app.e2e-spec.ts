@@ -11,7 +11,11 @@ describe('App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    browser.pause();
-    expect(page.getMainHeading()).toEqual('Training Scheduler');
+    expect(page.getMainHeading()).toEqual('Add a Training');
+  });
+
+  it('should save a training successfully', () => {
+    page.navigateTo();
+    expect(page.submitValidTraining()).toEqual(''); //indicates that the round-trip succeeded
   });
 });
