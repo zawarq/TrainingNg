@@ -27,7 +27,7 @@
     "bootstrap": "^4.3.1",
     "chromedriver": "^77.0.0",
     "core-js": "^3.3.2",
-    "jquery": "3.4.1",
+    "jquery": "3.5.0",
     "ng4-loading-spinner": "^1.2.3",
     "ng6-toastr-notifications": "^1.0.4",
     "popper.js": "^1.16.0",
